@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Website Add To Numbers Database</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1519985176271-adb1088fa94c.jpg');
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      color: #00ff99;
+      text-shadow: 2px 2px 4px #000;
+      margin-bottom: 30px;
+    }
+
+    input, button {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      margin: 10px;
+    }
+
+    input {
+      width: 260px;
+    }
+
+    button {
+      background-color: #00ff99;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: white;
+      text-shadow: 1px 1px 2px #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Tambah Nomor ke AuthorizedNumber</h1>
+  
+  <input type="text" id="phoneNumber" placeholder="Masukkan nomor telepon anda">
+  <button onclick="addToAuthorized()">Tambahkan ke database</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    // Ganti URL di bawah dengan RAW GitHub JSON milikmu
+    const rawGithubUrl = "https://raw.githubusercontent.com/PraiSlnce01/prai.js/main/WatshappPraiV2";
+
+    async function addToAuthorized() {
+      const phone = document.getElementById("phoneNumber").value.trim();
+      const result = document.getElementById("result");
+
+      if (!phone) {
+        result.textContent = "⚠️ Nomor tidak boleh kosong!";
+        return;
+      }
+
+      try {
+        const response = await fetch(rawGithubUrl);
+        let data = await response.json();
+
+        if (!Array.isArray(data)) {
+          result.textContent = "⚠️ Format database salah!";
+          return;
+        }
+
+        if (data.includes(phone)) {
+          result.textContent = "✅ Nomor sudah terdaftar ke database.";
+        } else {
+          data.push(phone);
+          console.log("📦 Database baru (simulasi):", data);
+          result.textContent = "✅ Nomor berhasil ditambahkan (simulasi).";
+
+          // NOTE: Simulasi saja, tidak menyimpan ke GitHub
+        }
+      } catch (err) {
+        console.error(err);
+        result.textContent = "❌ Gagal mengambil database dari GitHub.";
+      }
+
+      document.getElementById("phoneNumber").value = "";
+    }
+  </script>
+
+</body>
+</html>
