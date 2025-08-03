@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Number DB</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    video#bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+    }
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.6);
+      padding: 30px;
+      border-radius: 15px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+    input[type="text"] {
+      padding: 12px;
+      width: 250px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #00ffc8;
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00c2a8;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Video Background -->
+<video id="bg-video" autoplay muted loop>
+  <source src="https://files.catbox.moe/3jyser.mp4" type="video/mp4">
+  Browser tidak mendukung video.
+</video>
+
+<!-- Suara terpisah -->
+<audio autoplay loop>
+  <source src="https://files.catbox.moe/3jyser.mp4" type="audio/mp4">
+  Browser tidak mendukung audio.
+</audio>
+
+<div class="container">
+  <h1>Tambah Nomor ke Database</h1>
+  <form id="addNumberForm">
+    <input type="text" id="numberInput" placeholder="Masukkan Nomor WhatsApp" required />
+    <br/>
+    <button type="submit">Tambah</button>
+  </form>
+  <p id="statusMsg"></p>
+</div>
+
+<script>
+  const form = document.getElementById("addNumberForm");
+  const statusMsg = document.getElementById("statusMsg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const number = document.getElementById("numberInput").value.trim();
+    
+    // Ganti URL berikut dengan endpoint/script Anda
+    const githubRawURL = "https://github.com/PraiSlnce01/prai.js/raw/refs/heads/main/userdatabase"; // atau webhook lain
+
+    try {
+      const response = await fetch(githubRawURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ number: number })
+      });
+
+      if (response.ok) {
+        statusMsg.textContent = "✅ Nomor berhasil ditambahkan!";
+        form.reset();
+      } else {
+        statusMsg.textContent = "❌ Gagal menambahkan nomor.";
+      }
+    } catch (error) {
+      statusMsg.textContent = "⚠️ Terjadi kesalahan koneksi.";
+    }
+  });
+</script>
+
+</body>
+</html>
