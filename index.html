@@ -72,7 +72,16 @@
     <button onclick="submitNomor()">Kirim</button>
     <div class="message" id="message"></div>
   </div>
-
+</div><div class="music-btn" onclick="toggleMusicPopup()">🎵</div>
+<div class="music-popup" id="musicPopup">
+  <div class="close-btn" onclick="toggleMusicPopup()">×</div>
+  <div class="music-list">
+    <button onclick="playSong('https://files.catbox.moe/3jyser.mp4')">🎵 Fireflies</button>
+    <button onclick="playSong('https://files.catbox.moe/unbo27.mp3')">🎵 Tie me down</button>
+    <button onclick="playSong('https://files.catbox.moe/8smnze.mp3')">🎵 Dj 8 Letters</button>
+  </div>
+</div>
+  
   <script>
     async function submitNomor() {
       const nomor = document.getElementById('nomorInput').value.trim();
